@@ -15,7 +15,8 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:label="keyless_kawai"
-        android:usesCleartextTraffic="true"> <!--  not permitted error -->
+        android:usesCleartextTraffic="true">
+
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -25,49 +26,38 @@
             android:taskAffinity=""
             android:theme="@style/LaunchTheme"
             android:windowSoftInputMode="adjustResize">
-            <!-- Specifies an Android theme to apply to this Activity as soon as
-                 the Android process has started. This theme is visible to the user
-                 while the Flutter UI initializes. After that, this theme continues
-                 to determine the Window background behind the Flutter UI. -->
+
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- Merged Meta-data -->
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/keyless_widget_info" />
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
-
-        <!-- Just a Registration Tag -->
-        <!-- Whenever my widget needs to be updated update using this class '.KeylessWidgetProvider' -->
-
-        <!-- android:name=".KeylessWidgetProvider" is just pointer to the widget provider class -->
-        <!-- android:exported="false"> is for allowing widget to receive broadcast from other app -->
-        <!-- intent-filter are used for filtering broadcast -->
-        <!-- 'android.appwidget.action.APPWIDGET_UPDATE' this filter is used for listen to update to my own widget -->
-
-
-        <!-- 'android.appwidget.provider' essential tag for hocking with xml -->
-        <!-- 'meta-data' used for linking with xml -->
-        <!-- '@xml/keyless_widget_info' location of my xml -->
-
-
+        <!-- Keep your Receiver and Service as they are -->
         <receiver
             android:name=".KeylessWidgetProvider"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="KEYLESS_ACTION_UNLOCK" />
                 <action android:name="ACTION_ICON" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/keyless_widget_info" />
-
-
         </receiver>
 
         <service
